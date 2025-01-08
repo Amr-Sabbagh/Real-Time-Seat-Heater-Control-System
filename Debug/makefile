@@ -12,6 +12,12 @@ GEN_CMDS__FLAG :=
 ORDERED_OBJS += \
 "./main.obj" \
 "./tm4c123gh6pm_startup_ccs.obj" \
+"./APP/System_Control/System_Control.obj" \
+"./APP/System_Diagnostics/System_Diagnostics.obj" \
+"./APP/System_Display/System_Display.obj" \
+"./APP/System_Measurements/System_Measurements.obj" \
+"./APP/System_Setup/System_Setup.obj" \
+"./Common/Det.obj" \
 "./FreeRTOS/Source/event_groups.obj" \
 "./FreeRTOS/Source/list.obj" \
 "./FreeRTOS/Source/queue.obj" \
@@ -20,24 +26,16 @@ ORDERED_OBJS += \
 "./FreeRTOS/Source/portable/CCS/ARM_CM4F/port.obj" \
 "./FreeRTOS/Source/portable/CCS/ARM_CM4F/portasm.obj" \
 "./FreeRTOS/Source/portable/MemMang/heap_1.obj" \
-"./HAL/Button/Button.obj" \
+"./HAL/Buttons/Button.obj" \
 "./HAL/LEDs/Led.obj" \
-"./HAL/Potentiometer/POT.obj" \
+"./HAL/Potentiometers/POT.obj" \
 "./MCAL/ADC/ADC.obj" \
-"./MCAL/AUTOSAR_DIO_PORT/Det.obj" \
-"./MCAL/AUTOSAR_DIO_PORT/Dio.obj" \
-"./MCAL/AUTOSAR_DIO_PORT/Dio_PBcfg.obj" \
-"./MCAL/AUTOSAR_DIO_PORT/Gpt.obj" \
-"./MCAL/AUTOSAR_DIO_PORT/Mcu.obj" \
-"./MCAL/AUTOSAR_DIO_PORT/Port.obj" \
-"./MCAL/AUTOSAR_DIO_PORT/Port_PBcfg.obj" \
+"./MCAL/DIO/Dio.obj" \
+"./MCAL/DIO/Dio_PBcfg.obj" \
 "./MCAL/GPTM/GPTM.obj" \
+"./MCAL/PORT/Port.obj" \
+"./MCAL/PORT/Port_PBcfg.obj" \
 "./MCAL/UART/uart0.obj" \
-"./System_Control/System_Control.obj" \
-"./System_Diagnostics/System_Diagnostics.obj" \
-"./System_Display/System_Display.obj" \
-"./System_Measurements/System_Measurements.obj" \
-"./System_Setup/System_Setup.obj" \
 "../tm4c123gh6pm.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
@@ -50,37 +48,41 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include APP/System_Control/subdir_vars.mk
+-include APP/System_Diagnostics/subdir_vars.mk
+-include APP/System_Display/subdir_vars.mk
+-include APP/System_Measurements/subdir_vars.mk
+-include APP/System_Setup/subdir_vars.mk
+-include Common/subdir_vars.mk
 -include FreeRTOS/Source/subdir_vars.mk
 -include FreeRTOS/Source/portable/CCS/ARM_CM4F/subdir_vars.mk
 -include FreeRTOS/Source/portable/MemMang/subdir_vars.mk
--include HAL/Button/subdir_vars.mk
+-include HAL/Buttons/subdir_vars.mk
 -include HAL/LEDs/subdir_vars.mk
--include HAL/Potentiometer/subdir_vars.mk
+-include HAL/Potentiometers/subdir_vars.mk
 -include MCAL/ADC/subdir_vars.mk
--include MCAL/AUTOSAR_DIO_PORT/subdir_vars.mk
+-include MCAL/DIO/subdir_vars.mk
 -include MCAL/GPTM/subdir_vars.mk
+-include MCAL/PORT/subdir_vars.mk
 -include MCAL/UART/subdir_vars.mk
--include System_Control/subdir_vars.mk
--include System_Diagnostics/subdir_vars.mk
--include System_Display/subdir_vars.mk
--include System_Measurements/subdir_vars.mk
--include System_Setup/subdir_vars.mk
 -include subdir_rules.mk
+-include APP/System_Control/subdir_rules.mk
+-include APP/System_Diagnostics/subdir_rules.mk
+-include APP/System_Display/subdir_rules.mk
+-include APP/System_Measurements/subdir_rules.mk
+-include APP/System_Setup/subdir_rules.mk
+-include Common/subdir_rules.mk
 -include FreeRTOS/Source/subdir_rules.mk
 -include FreeRTOS/Source/portable/CCS/ARM_CM4F/subdir_rules.mk
 -include FreeRTOS/Source/portable/MemMang/subdir_rules.mk
--include HAL/Button/subdir_rules.mk
+-include HAL/Buttons/subdir_rules.mk
 -include HAL/LEDs/subdir_rules.mk
--include HAL/Potentiometer/subdir_rules.mk
+-include HAL/Potentiometers/subdir_rules.mk
 -include MCAL/ADC/subdir_rules.mk
--include MCAL/AUTOSAR_DIO_PORT/subdir_rules.mk
+-include MCAL/DIO/subdir_rules.mk
 -include MCAL/GPTM/subdir_rules.mk
+-include MCAL/PORT/subdir_rules.mk
 -include MCAL/UART/subdir_rules.mk
--include System_Control/subdir_rules.mk
--include System_Diagnostics/subdir_rules.mk
--include System_Display/subdir_rules.mk
--include System_Measurements/subdir_rules.mk
--include System_Setup/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -177,29 +179,29 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-Vehicle_Seats_Heater_Control_System.out 
+SEAT_HEATER_CONTROL_SYSTEM.out 
 
 EXE_OUTPUTS__QUOTED += \
-"Vehicle_Seats_Heater_Control_System.out" 
+"SEAT_HEATER_CONTROL_SYSTEM.out" 
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "Vehicle_Seats_Heater_Control_System.out"
+	@$(MAKE) --no-print-directory -Onone "SEAT_HEATER_CONTROL_SYSTEM.out"
 
 # Tool invocations
-Vehicle_Seats_Heater_Control_System.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+SEAT_HEATER_CONTROL_SYSTEM.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: Arm Linker'
-	"C:/ti/ccs1271/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"Vehicle_Seats_Heater_Control_System.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1271/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1271/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Vehicle_Seats_Heater_Control_System_linkInfo.xml" --rom_model -o "Vehicle_Seats_Heater_Control_System.out" $(ORDERED_OBJS)
+	"C:/ti/ccs1271/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"SEAT_HEATER_CONTROL_SYSTEM.map" --heap_size=0 --stack_size=512 -i"C:/ti/ccs1271/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1271/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="SEAT_HEATER_CONTROL_SYSTEM_linkInfo.xml" --rom_model -o "SEAT_HEATER_CONTROL_SYSTEM.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "FreeRTOS\Source\event_groups.obj" "FreeRTOS\Source\list.obj" "FreeRTOS\Source\queue.obj" "FreeRTOS\Source\tasks.obj" "FreeRTOS\Source\timers.obj" "FreeRTOS\Source\portable\CCS\ARM_CM4F\port.obj" "FreeRTOS\Source\portable\CCS\ARM_CM4F\portasm.obj" "FreeRTOS\Source\portable\MemMang\heap_1.obj" "HAL\Button\Button.obj" "HAL\LEDs\Led.obj" "HAL\Potentiometer\POT.obj" "MCAL\ADC\ADC.obj" "MCAL\AUTOSAR_DIO_PORT\Det.obj" "MCAL\AUTOSAR_DIO_PORT\Dio.obj" "MCAL\AUTOSAR_DIO_PORT\Dio_PBcfg.obj" "MCAL\AUTOSAR_DIO_PORT\Gpt.obj" "MCAL\AUTOSAR_DIO_PORT\Mcu.obj" "MCAL\AUTOSAR_DIO_PORT\Port.obj" "MCAL\AUTOSAR_DIO_PORT\Port_PBcfg.obj" "MCAL\GPTM\GPTM.obj" "MCAL\UART\uart0.obj" "System_Control\System_Control.obj" "System_Diagnostics\System_Diagnostics.obj" "System_Display\System_Display.obj" "System_Measurements\System_Measurements.obj" "System_Setup\System_Setup.obj" 
-	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "FreeRTOS\Source\event_groups.d" "FreeRTOS\Source\list.d" "FreeRTOS\Source\queue.d" "FreeRTOS\Source\tasks.d" "FreeRTOS\Source\timers.d" "FreeRTOS\Source\portable\CCS\ARM_CM4F\port.d" "FreeRTOS\Source\portable\MemMang\heap_1.d" "HAL\Button\Button.d" "HAL\LEDs\Led.d" "HAL\Potentiometer\POT.d" "MCAL\ADC\ADC.d" "MCAL\AUTOSAR_DIO_PORT\Det.d" "MCAL\AUTOSAR_DIO_PORT\Dio.d" "MCAL\AUTOSAR_DIO_PORT\Dio_PBcfg.d" "MCAL\AUTOSAR_DIO_PORT\Gpt.d" "MCAL\AUTOSAR_DIO_PORT\Mcu.d" "MCAL\AUTOSAR_DIO_PORT\Port.d" "MCAL\AUTOSAR_DIO_PORT\Port_PBcfg.d" "MCAL\GPTM\GPTM.d" "MCAL\UART\uart0.d" "System_Control\System_Control.d" "System_Diagnostics\System_Diagnostics.d" "System_Display\System_Display.d" "System_Measurements\System_Measurements.d" "System_Setup\System_Setup.d" 
+	-$(RM) "main.obj" "tm4c123gh6pm_startup_ccs.obj" "APP\System_Control\System_Control.obj" "APP\System_Diagnostics\System_Diagnostics.obj" "APP\System_Display\System_Display.obj" "APP\System_Measurements\System_Measurements.obj" "APP\System_Setup\System_Setup.obj" "Common\Det.obj" "FreeRTOS\Source\event_groups.obj" "FreeRTOS\Source\list.obj" "FreeRTOS\Source\queue.obj" "FreeRTOS\Source\tasks.obj" "FreeRTOS\Source\timers.obj" "FreeRTOS\Source\portable\CCS\ARM_CM4F\port.obj" "FreeRTOS\Source\portable\CCS\ARM_CM4F\portasm.obj" "FreeRTOS\Source\portable\MemMang\heap_1.obj" "HAL\Buttons\Button.obj" "HAL\LEDs\Led.obj" "HAL\Potentiometers\POT.obj" "MCAL\ADC\ADC.obj" "MCAL\DIO\Dio.obj" "MCAL\DIO\Dio_PBcfg.obj" "MCAL\GPTM\GPTM.obj" "MCAL\PORT\Port.obj" "MCAL\PORT\Port_PBcfg.obj" "MCAL\UART\uart0.obj" 
+	-$(RM) "main.d" "tm4c123gh6pm_startup_ccs.d" "APP\System_Control\System_Control.d" "APP\System_Diagnostics\System_Diagnostics.d" "APP\System_Display\System_Display.d" "APP\System_Measurements\System_Measurements.d" "APP\System_Setup\System_Setup.d" "Common\Det.d" "FreeRTOS\Source\event_groups.d" "FreeRTOS\Source\list.d" "FreeRTOS\Source\queue.d" "FreeRTOS\Source\tasks.d" "FreeRTOS\Source\timers.d" "FreeRTOS\Source\portable\CCS\ARM_CM4F\port.d" "FreeRTOS\Source\portable\MemMang\heap_1.d" "HAL\Buttons\Button.d" "HAL\LEDs\Led.d" "HAL\Potentiometers\POT.d" "MCAL\ADC\ADC.d" "MCAL\DIO\Dio.d" "MCAL\DIO\Dio_PBcfg.d" "MCAL\GPTM\GPTM.d" "MCAL\PORT\Port.d" "MCAL\PORT\Port_PBcfg.d" "MCAL\UART\uart0.d" 
 	-$(RM) "FreeRTOS\Source\portable\CCS\ARM_CM4F\portasm.d" 
 	-@echo 'Finished clean'
 	-@echo ' '

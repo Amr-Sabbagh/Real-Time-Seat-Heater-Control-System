@@ -18,8 +18,9 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
+
 #include "GPTM.h"
-#include "std_types.h"
+#include "Std_Types.h"
 
 /******************************************************************************/
 /* Scheduling behavior related definitions. **********************************/
@@ -33,7 +34,7 @@
 
 /* configTICK_RATE_HZ sets frequency of the tick interrupt in Hz, so
  * in our case Tick time will be 10ms */
-#define configTICK_RATE_HZ                    ((TickType_t)100)
+#define configTICK_RATE_HZ                    ((TickType_t)1000)
 
 /* Size of the stack allocated to the Idle task. 128 Words = 512 Bytes */
 #define configMINIMAL_STACK_SIZE              (128)
@@ -136,7 +137,7 @@
 routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL
 INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER
 PRIORITY THAN THIS! (higher priorities are lower numeric values. */
-#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY  5
+#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY  4
 
 /* Interrupt priorities used by the kernel port layer itself (the tick and context switch performing interrupts).
  * This implementation is generic to all Cortex-M ports, and do not rely on any particular library functions. */
@@ -157,6 +158,11 @@ PRIORITY THAN THIS! (higher priorities are lower numeric values. */
 /******************************************************************************/
 /* RTOS Runtime Measurements. *************************************************/
 /******************************************************************************/
+/* Set configUSE_TRACE_FACILITY to include additional task structure members
+ * are used by trace and visualization functions and tools.  Set to 0 to exclude
+ * the additional information from the structures. Defaults to 0 if left
+ * undefined. */
+#define configUSE_TRACE_FACILITY             1
 
 extern uint32 ullTasksOutTime[11];
 extern uint32 ullTasksInTime[11];
@@ -174,5 +180,4 @@ do{                                                                             
     ullTasksOutTime[taskOutTag] = GPTM_WTimer0Read();                                            \
     ullTasksTotalTime[taskOutTag] += ullTasksOutTime[taskOutTag] - ullTasksInTime[taskOutTag];   \
 }while(0);
-
 #endif /* FREERTOS_CONFIG_H */

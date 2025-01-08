@@ -8,32 +8,45 @@
 #include "ADC.h"
 #include "tm4c123gh6pm_registers.h"
 
-void ADC0_EnableCLock(){
-    /* RCC Registers */
-    ADC_ADCRCGCADC_REG  |= (1<<0);               /* Enable ADC0 Clock */
-}
-
-
-uint32 ADC0_ReadChannel(channel_no channel)
+void ADC_Init(void)
 {
+    ADC_ADCRCGCADC_REG |= (1<<0) | (1<<1);
 
-    /* Initialize the sequencer */
-    ADC0_ADCACTSS_REG     = (0x00000000);         /* De-activate all the sample sequencers */
-    ADC0_ADCSSMUX0_REG    = channel;              /* the first sequencer of sequencer0 is for AIN1 */
-    ADC0_ADCSSCTL0_REG   |= 0x6;                  /* The first sequencer is the last sequencer - Enable interrupt */
-    ADC0_ADCACTSS_REG    |=(1<<0);
+    while ((ADC_ADCRCGCADC_REG & 0x03) == 0); // Wait for ADC clock to stabilize
 
-    /* Start Conversion */
-    ADC0_ADCPSSI_REG = (ADC0_ADCPSSI_REG & 0xFFFFFFF0 ) | ( (1<<0) );
+    ADC0_ADCACTSS_REG    = 0x00000000;
+    ADC0_ADCSSMUX3_REG   = 0;
+    ADC0_ADCSSCTL3_REG   = 0x06;
+    ADC0_ADCACTSS_REG   |= 0x08;
 
-    /* Check on the flag till the conversation is done */
-    while(!(ADC0_ADCRIS_REG & 0x00000001));
+    ADC1_ADCACTSS_REG    = 0x00000000;
+    ADC1_ADCSSMUX3_REG   = 1;
+    ADC1_ADCSSCTL3_REG   = 0x06;
+    ADC1_ADCACTSS_REG   |= 0x08;
 
-    /* Clear the flag */
-    ADC0_ADCISC_REG |= 0x00000001;
-
-    /* return the data */
-    return (uint32) (ADC0_ADCSSFIFO0_REG);
 }
 
-
+uint32 ADC_Read(uint8 channel)
+{
+    uint32 result;
+    switch (channel)
+    {
+        case 0:
+        {
+            ADC0_ADCPSSI_REG = 0x08;
+            while(!(ADC0_ADCRIS_REG & 0x00000008)); // Wait for the conversion to complete
+            result = ADC0_ADCSSFIFO3_REG;
+            ADC0_ADCISC_REG = 0x08;
+            break;
+        }
+        case 1:
+        {
+            ADC1_ADCPSSI_REG = 0x08;
+            while(!(ADC1_ADCRIS_REG & 0x00000008)); // Wait for the conversion to complete
+            result = ADC1_ADCSSFIFO3_REG;
+            ADC1_ADCISC_REG = 0x08;
+            break;
+        }
+    }
+    return result;
+}

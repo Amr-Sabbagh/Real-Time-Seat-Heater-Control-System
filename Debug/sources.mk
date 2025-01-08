@@ -112,19 +112,21 @@ PDE_DEPS__QUOTED :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 . \
+APP/System_Control \
+APP/System_Diagnostics \
+APP/System_Display \
+APP/System_Measurements \
+APP/System_Setup \
+Common \
 FreeRTOS/Source \
 FreeRTOS/Source/portable/CCS/ARM_CM4F \
 FreeRTOS/Source/portable/MemMang \
-HAL/Button \
+HAL/Buttons \
 HAL/LEDs \
-HAL/Potentiometer \
+HAL/Potentiometers \
 MCAL/ADC \
-MCAL/AUTOSAR_DIO_PORT \
+MCAL/DIO \
 MCAL/GPTM \
+MCAL/PORT \
 MCAL/UART \
-System_Control \
-System_Diagnostics \
-System_Display \
-System_Measurements \
-System_Setup \
 
