@@ -17,7 +17,7 @@ The project is organized as follows:
 - **FreeRTOS Configuration:** Includes FreeRTOS setup and configuration files
 
 ### APP Folder Modules
-1. **Setup Module (`System_Setup.c`/`System_Setup.h/System_Setup_Cfg.h`)**
+1. **Setup Module (`System_Setup.c`/`System_Setup.h`/`System_Setup_Cfg.h`)**
    - **Purpose:** Initializes system components and creates tasks, semaphores, and mutexes.
    - **Responsibilities:**
      - Defines task handles and shared resources
